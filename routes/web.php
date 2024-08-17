@@ -22,6 +22,21 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'nama' => 'Adi Kurniawan',
+        'frameworks' => ['Laravel', 'Vue', 'Inertia'],
+    ]);
+});
+
+Route::get('/users', function () {
+    // sleep(2);
+    return Inertia::render('Users', [
+        'tanggal' => date('d-M-Y'),
+        'time' => now()->toTimeString()
+    ]);
+});
+
+Route::get('/settings', function () {
+    return Inertia::render('Settings', [
     ]);
 });
 
@@ -34,5 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
