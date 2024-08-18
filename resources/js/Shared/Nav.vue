@@ -1,9 +1,10 @@
 <script setup>
-import { Link, router } from "@inertiajs/vue3";
+// import { Link, router } from "@inertiajs/vue3";
+import NavLink from "./NavLink.vue";
 </script>
 <template>
     <nav>
-        <ul class="flex gap-2 text-sky-500">
+        <ul class="flex text-sky-500 space-x-4 list-inside list-disc">
             <li>
                 <Link
                     class="hover:underline"
@@ -13,7 +14,7 @@ import { Link, router } from "@inertiajs/vue3";
                 >
             </li>
             <li>
-                <Link
+                <!-- <Link
                     class="hover:underline"
                     href="/users"
                     :class="{
@@ -21,6 +22,9 @@ import { Link, router } from "@inertiajs/vue3";
                         // bisa pake $page.url.startsWith() atau pake $page.component ==
                     }"
                     >Users</Link
+                > -->
+                <NavLink href="/users" :active="$page.component === 'Users'"
+                    >Users</NavLink
                 >
             </li>
             <li>
@@ -39,6 +43,7 @@ import { Link, router } from "@inertiajs/vue3";
                     href="/logout"
                     method="POST"
                     :data="{ foo: 'bar' }"
+                    as="button"
                     >Log Out</Link
                 >
             </li>

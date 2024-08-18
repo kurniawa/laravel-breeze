@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,9 +30,11 @@ Route::get('/', function () {
 
 Route::get('/users', function () {
     // sleep(2);
+    $users = User::limit(10)->get();
     return Inertia::render('Users', [
         'tanggal' => date('d-M-Y'),
-        'time' => now()->toTimeString()
+        'time' => now()->toTimeString(),
+        'users' => $users
     ]);
 });
 

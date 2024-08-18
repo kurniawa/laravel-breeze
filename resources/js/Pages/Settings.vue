@@ -1,10 +1,18 @@
 <script setup>
-import Nav from "@/Shared/Nav.vue";
+import Layout from "@/Shared/Layout.vue";
 
-defineProps({});
+defineProps({
+    // layout: Layout,
+});
+</script>
+<script>
+export default {
+    layout: Layout,
+};
 </script>
 
 <template>
-    <Nav></Nav>
+    <!-- <Layout> -->
     <h1>Settings</h1>
+    <!-- </Layout> -->
 </template>
