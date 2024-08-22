@@ -30,11 +30,13 @@ Route::get('/', function () {
 
 Route::get('/users', function () {
     // sleep(2);
-    $users = User::limit(10)->get();
+    $users = User::limit(10)->get()->map(fn($user) => ['id'=>$user->id,'name'=>$user->name]);
+    $obj_users = User::paginate(10)->through(fn($user) => ['id'=>$user->id,'name'=>$user->name]);
     return Inertia::render('Users', [
         'tanggal' => date('d-M-Y'),
         'time' => now()->toTimeString(),
-        'users' => $users
+        'users' => $users,
+        'obj_users' => $obj_users
     ]);
 });
 

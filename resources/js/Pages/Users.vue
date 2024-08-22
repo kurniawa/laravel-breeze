@@ -1,12 +1,15 @@
 <script setup>
 import Layout from "@/Shared/Layout.vue";
-import { Head } from "@inertiajs/vue3";
+import Pagination from "@/Shared/Pagination.vue";
+import { Head, Link } from "@inertiajs/vue3";
 // import { Link } from "@inertiajs/vue3";
-defineProps({
+const props = defineProps({
     tanggal: String,
     time: String,
     users: Array,
+    obj_users: Object,
 });
+console.log(props.obj_users);
 </script>
 
 <script>
@@ -28,8 +31,34 @@ export default {
     <div class="mt-96">waktu: {{ time }}</div>
     <Link href="/users" preserve-scroll>Refresh</Link>
     <h1>Users</h1>
-    <ul>
+    <!-- <ul>
         <li v-for="user of users" :key="user.id" v-text="user.name"></li>
-    </ul>
+    </ul> -->
+    <table>
+        <tbody>
+            <tr v-for="user of obj_users.data" :key="user.id">
+                <td>{{ user.name }}</td>
+                <td>
+                    <Link
+                        :href="'/users/' + user.id + '/edit'"
+                        class="text-sky-500"
+                        >Edit</Link
+                    >
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginator -->
+    <div class="mt-6">
+        <template v-for="link in obj_users.links">
+            <Link v-if="link.url" :href="link.url" v-html="link.label" />
+            <span v-else v-html="link.label"></span>
+        </template>
+    </div>
+    <div class="mt-5">
+        <Pagination :links="obj_users.links" />
+    </div>
+    <!-- End: Paginator -->
     <!-- </Layout> -->
 </template>
