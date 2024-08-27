@@ -2,6 +2,8 @@
 import Layout from "@/Shared/Layout.vue";
 import Pagination from "@/Shared/Pagination.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
+import { debounce } from "lodash";
+import { throttle } from "lodash";
 import { ref, watch } from "vue";
 // import { Link } from "@inertiajs/vue3";
 // import Inertia from "@inertiajs/inertia"; // versi vue 2
@@ -22,13 +24,21 @@ let search = ref(props.filters.search);
 //     console.log(search.value);
 // }
 
-watch(search, (value) => {
-    router.get(
-        "/users",
-        { search: value },
-        { preserveState: true, preserveScroll: true, replace: true }
-    );
-});
+watch(
+    search,
+    debounce((value) => {
+        console.log("triggered");
+        router.get(
+            "/users",
+            { search: value },
+            { preserveState: true, preserveScroll: true, replace: true }
+        );
+    }, 500)
+);
+
+// kalo watch ditambah dengan throttle, artinya nanti triggered setiap 500 ms
+// kalo ditambah dengan debounce, artinya nanti triggered setelah berhenti dari user input selama 500 ms
+// sejauh ini sih sepertinya lebih cocok debounce. Jadi ga perlu sering-sering network request
 
 // watch(props.filter, (value) => {
 //     console.log(value);

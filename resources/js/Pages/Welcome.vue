@@ -19,7 +19,10 @@ export default {
 
 <template>
     <!-- <Layout> -->
-    <h1 class="text-3xl">Hellow, {{ nama }}, {{ foo }}</h1>
+    <h1
+        class="text-3xl"
+        v-text="nama ? 'Welcome, ' + nama : 'You are not logged in!'"
+    ></h1>
     <p>We will use following frameworks:</p>
     <ul>
         <li v-for="framework of frameworks">{{ framework }}</li>

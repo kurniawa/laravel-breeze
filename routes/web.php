@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,12 +20,17 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    $user = Auth::user();
+    $nama = '';
+    if ($user) {
+        $nama = $user->name;
+    }
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'nama' => 'Adi Kurniawan',
+        'nama' => $nama,
         'frameworks' => ['Laravel', 'Vue', 'Inertia'],
     ]);
 });
@@ -50,11 +56,15 @@ Route::get('/users', function (Request $request) {
 });
 
 Route::get('/users/create', function (Request $request) {
+    // if (session()) {
+    //     dump(session());
+    // }
     return Inertia::render('Users/Create', [
         
     ]);
-});
+})->middleware('auth');
 Route::post('/users/store', function (Request $request) {
+    sleep(3);
     $post = $request->post();
     // dd($post);
     $attributes = $request->validate([
@@ -70,7 +80,7 @@ Route::post('/users/store', function (Request $request) {
     dd('');
     return redirect('/users');
     // dd('');
-});
+})->middleware('auth');
 
 Route::get('/settings', function () {
     return Inertia::render('Settings', [
